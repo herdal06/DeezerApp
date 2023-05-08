@@ -1,18 +1,24 @@
+import com.herdal.deezerapp.Libs
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 android {
-    namespace 'com.herdal.deezerapp'
-    compileSdk 33
+    compileSdk Config.compileSdk
+    namespace Config.applicationId
 
     defaultConfig {
-        applicationId "com.herdal.deezerapp"
-        minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId Config.applicationId
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
+        versionCode Config.versionCode
+        versionName Config.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,15 +36,73 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
 }
 
 dependencies {
+    implementation Libs.AndroidX.core
+    implementation Libs.AndroidX.appCompat
+    implementation Libs.AndroidX.constraintLayout
+    implementation Libs.AndroidX.swipe_refresh_layout
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Google
+    implementation Libs.Google.material
+    implementation Libs.Google.gson
+
+    // Test
+    testImplementation Libs.Test.junit
+    androidTestImplementation Libs.Test.testExt
+    androidTestImplementation Libs.Test.espresso
+
+    // Navigation
+    implementation Libs.AndroidX.navigation
+    implementation Libs.AndroidX.navigationUI
+
+    // Lifecycle
+    implementation Libs.AndroidX.extensions
+    implementation Libs.AndroidX.runtime
+    implementation Libs.AndroidX.vmLifeCycle
+    implementation Libs.AndroidX.livedata
+
+    // Retrofit
+    implementation Libs.Network.retrofit
+    implementation Libs.Network.gsonConverter
+    implementation Libs.Network.moshiConverter
+    implementation Libs.Network.okhttp
+    implementation Libs.Network.interceptor
+
+    // Storage
+    implementation Libs.Storage.dataStore
+    implementation Libs.Storage.Room.ktx
+    implementation Libs.Storage.Room.runtime
+    implementation Libs.Storage.Room.pagingSupport
+    kapt Libs.Storage.Room.compiler
+
+    // Hilt
+    implementation Libs.Hilt.android
+    kapt Libs.Hilt.compiler
+
+    // Glide
+    implementation Libs.Image.glide
+    annotationProcessor Libs.Image.compiler
+
+    // Timber
+    implementation Libs.Log.timber
+
+    // Logger
+    implementation Libs.Log.logger
+
+    // Paging3
+    implementation Libs.Paging.paging3
+
+    // Coroutines
+    implementation Libs.Kotlin.coroutines
+    implementation Libs.Kotlin.coroutinesCore
+
+    // Moshi
+    implementation Libs.Network.moshi
+    kapt Libs.Network.codegen
 }
