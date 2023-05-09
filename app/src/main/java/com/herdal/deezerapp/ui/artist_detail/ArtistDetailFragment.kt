@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.herdal.deezerapp.databinding.FragmentArtistDetailBinding
 import com.herdal.deezerapp.domain.uimodel.Artist
+import com.herdal.deezerapp.ui.artist_detail.adapter.AlbumAdapter
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +25,8 @@ class ArtistDetailFragment : Fragment() {
 
     private fun getArtistIdByArgs() = navigationArgs.artistId
 
+    private lateinit var albumAdapter: AlbumAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,7 +38,9 @@ class ArtistDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerViewAdapters()
         collectArtistDetail(getArtistIdByArgs())
+        collectArtistAlbums(getArtistIdByArgs())
     }
 
     private fun collectArtistDetail(artistId: Int) {
@@ -47,14 +52,31 @@ class ArtistDetailFragment : Fragment() {
         }
     }
 
+    private fun collectArtistAlbums(artistId: Int) {
+        viewModel.onEvent(ArtistDetailUiEvent.GetArtistAlbums(artistId))
+        collectLatestLifecycleFlow(viewModel.uiState) { state ->
+            state.albums?.let { albums ->
+                albumAdapter.albums = albums
+            }
+        }
+    }
+
     private fun setupUI(artist: Artist) {
         binding.artist = artist
-
         setupActionBarTitle(artist.name)
     }
 
     private fun setupActionBarTitle(title: String?) {
         (activity as AppCompatActivity).supportActionBar?.title = title
+    }
+
+    private fun initRecyclerViewAdapters() {
+        albumAdapter = AlbumAdapter()
+        setupRecyclerViews()
+    }
+
+    private fun setupRecyclerViews() = with(binding) {
+        rvAlbums.adapter = albumAdapter
     }
 
     override fun onDestroyView() {
