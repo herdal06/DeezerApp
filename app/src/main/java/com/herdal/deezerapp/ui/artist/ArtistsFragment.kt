@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.herdal.deezerapp.databinding.FragmentArtistsBinding
 import com.herdal.deezerapp.ui.artist.adapter.ArtistAdapter
+import com.herdal.deezerapp.ui.artist.adapter.ArtistClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,8 +52,17 @@ class ArtistsFragment : Fragment() {
     }
 
     private fun initRecyclerViewAdapters() {
-        artistAdapter = ArtistAdapter()
+        artistAdapter = ArtistAdapter(object : ArtistClickListener {
+            override fun onArtistClick(id: Int) {
+                navigateToArtistDetail(id)
+            }
+        })
         setupRecyclerViews()
+    }
+
+    private fun navigateToArtistDetail(id: Int) {
+        val action = ArtistsFragmentDirections.actionArtistsFragmentToArtistDetailFragment(id)
+        findNavController().navigate(action)
     }
 
     private fun setupRecyclerViews() = with(binding) {
