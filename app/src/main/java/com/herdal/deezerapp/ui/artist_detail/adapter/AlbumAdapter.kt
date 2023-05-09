@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.herdal.deezerapp.databinding.ItemAlbumBinding
 import com.herdal.deezerapp.domain.uimodel.Album
 
-class AlbumAdapter : RecyclerView.Adapter<AlbumViewHolder>() {
+class AlbumAdapter(
+    private val albumClickListener: AlbumClickListener
+) : RecyclerView.Adapter<AlbumViewHolder>() {
 
     private val diffUtil = object : DiffUtil.ItemCallback<Album>() {
         override fun areItemsTheSame(
@@ -35,7 +37,7 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val binding = ItemAlbumBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return AlbumViewHolder(binding)
+        return AlbumViewHolder(binding, albumClickListener)
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
