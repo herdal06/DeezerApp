@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.herdal.deezerapp.databinding.FragmentGenresBinding
 import com.herdal.deezerapp.ui.genre.adapter.GenreAdapter
+import com.herdal.deezerapp.ui.genre.adapter.GenreClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,14 +41,23 @@ class GenresFragment : Fragment() {
         viewModel.onEvent(GenresUiEvent.GetGenres)
         collectLatestLifecycleFlow(viewModel.uiState) { state ->
             state.genres?.let { categories ->
-                genreAdapter.categories = categories
+                genreAdapter.genres = categories
             }
         }
     }
 
     private fun initRecyclerViewAdapters() {
-        genreAdapter = GenreAdapter()
+        genreAdapter = GenreAdapter(object : GenreClickListener {
+            override fun onGenreClick(id: Int) {
+                navigateToArtistList(id)
+            }
+        })
         setupRecyclerViews()
+    }
+
+    private fun navigateToArtistList(id: Int) {
+        val action = GenresFragmentDirections.actionGenresFragmentToArtistsFragment(id)
+        findNavController().navigate(action)
     }
 
     private fun setupRecyclerViews() = with(binding) {
