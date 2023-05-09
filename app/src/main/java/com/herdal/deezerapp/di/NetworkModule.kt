@@ -1,6 +1,7 @@
 package com.herdal.deezerapp.di
 
 import androidx.viewbinding.BuildConfig
+import com.herdal.deezerapp.data.remote.service.AlbumService
 import com.herdal.deezerapp.data.remote.service.ArtistService
 import com.herdal.deezerapp.data.remote.service.GenreService
 import com.herdal.deezerapp.utils.constants.NetworkConstants
@@ -76,4 +77,9 @@ object NetworkModule {
     @Singleton
     fun provideArtistService(retrofit: Retrofit): ArtistService =
         retrofit.create(ArtistService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAlbumService(retrofit: Retrofit): AlbumService =
+        retrofit.create(AlbumService::class.java)
 }
