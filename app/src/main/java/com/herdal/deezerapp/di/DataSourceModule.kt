@@ -1,7 +1,7 @@
 package com.herdal.deezerapp.di
 
-import com.herdal.deezerapp.data.datasource.CategoryDataSource
-import com.herdal.deezerapp.data.remote.datasource.CategoryRemoteDataSource
+import com.herdal.deezerapp.data.datasource.GenreDataSource
+import com.herdal.deezerapp.data.remote.datasource.GenreRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataSourceModule {
 
     @Binds
-    abstract fun bindCategoryRemoteDataSource(categoryRemoteDataSource: CategoryRemoteDataSource): CategoryDataSource.Remote
+    abstract fun bindGenreRemoteDataSource(genreRemoteDataSource: GenreRemoteDataSource): GenreDataSource.Remote
 }

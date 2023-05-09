@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="category"
-            type="com.herdal.deezerapp.domain.uimodel.Category" />
+            name="genre"
+            type="com.herdal.deezerapp.domain.uimodel.Genre" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -23,20 +23,20 @@
             android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivCategory"
+                android:id="@+id/ivGenre"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
-                android:downloadImage="@{category.picture}"
+                android:downloadImage="@{genre.picture}"
                 android:scaleType="fitXY"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/tvCategoryName"
+                android:id="@+id/tvGenreName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="@{category.name}"
+                android:text="@{genre.name}"
                 android:textSize="20sp" />
         </LinearLayout>
 

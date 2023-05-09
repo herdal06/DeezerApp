@@ -1,10 +1,10 @@
-package com.herdal.deezerapp.data.remote.dto.category
+package com.herdal.deezerapp.data.remote.dto.genre
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CategoryDto(
+data class GenreDto(
     @Json(name = "id")
     val id: Int? = null,
     @Json(name = "name")

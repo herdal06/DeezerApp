@@ -1,7 +1,7 @@
 package com.herdal.deezerapp.di
 
 import androidx.viewbinding.BuildConfig
-import com.herdal.deezerapp.data.remote.service.CategoryService
+import com.herdal.deezerapp.data.remote.service.GenreService
 import com.herdal.deezerapp.utils.constants.NetworkConstants
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -68,6 +68,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCategoryService(retrofit: Retrofit): CategoryService =
-        retrofit.create(CategoryService::class.java)
+    fun provideGenreService(retrofit: Retrofit): GenreService =
+        retrofit.create(GenreService::class.java)
 }

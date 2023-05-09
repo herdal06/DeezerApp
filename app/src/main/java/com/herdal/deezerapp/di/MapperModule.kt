@@ -1,6 +1,6 @@
 package com.herdal.deezerapp.di
 
-import com.herdal.deezerapp.domain.mapper.CategoryDtoMapper
+import com.herdal.deezerapp.domain.mapper.GenreDtoMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ object MapperModule {
 
     @Provides
     @Singleton
-    fun provideCategoryDtoMapper(): CategoryDtoMapper = CategoryDtoMapper()
+    fun provideGenreDtoMapper(): GenreDtoMapper = GenreDtoMapper()
 }

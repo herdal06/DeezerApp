@@ -1,26 +1,26 @@
-package com.herdal.deezerapp.ui.category.adapter
+package com.herdal.deezerapp.ui.genre.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.herdal.deezerapp.databinding.ItemCategoryBinding
-import com.herdal.deezerapp.domain.uimodel.Category
+import com.herdal.deezerapp.databinding.ItemGenreBinding
+import com.herdal.deezerapp.domain.uimodel.Genre
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryViewHolder>() {
+class GenreAdapter : RecyclerView.Adapter<GenreViewHolder>() {
 
-    private val diffUtil = object : DiffUtil.ItemCallback<Category>() {
+    private val diffUtil = object : DiffUtil.ItemCallback<Genre>() {
         override fun areItemsTheSame(
-            oldItem: Category,
-            newItem: Category
+            oldItem: Genre,
+            newItem: Genre
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: Category,
-            newItem: Category
+            oldItem: Genre,
+            newItem: Genre
         ): Boolean {
             return oldItem == newItem
         }
@@ -28,17 +28,17 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryViewHolder>() {
 
     private val diffList = AsyncListDiffer(this, diffUtil)
 
-    var categories: List<Category>
+    var categories: List<Genre>
         get() = diffList.currentList
         set(value) = diffList.submitList(value)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val binding = ItemCategoryBinding
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
+        val binding = ItemGenreBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return CategoryViewHolder(binding)
+        return GenreViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
         holder.bind(categories[position])
     }
 
