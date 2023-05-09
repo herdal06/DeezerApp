@@ -1,5 +1,6 @@
 package com.herdal.deezerapp.di
 
+import com.herdal.deezerapp.domain.mapper.ArtistDtoMapper
 import com.herdal.deezerapp.domain.mapper.GenreDtoMapper
 import dagger.Module
 import dagger.Provides
@@ -13,4 +14,8 @@ object MapperModule {
     @Provides
     @Singleton
     fun provideGenreDtoMapper(): GenreDtoMapper = GenreDtoMapper()
+
+    @Provides
+    @Singleton
+    fun provideArtistDtoMapper(): ArtistDtoMapper = ArtistDtoMapper()
 }

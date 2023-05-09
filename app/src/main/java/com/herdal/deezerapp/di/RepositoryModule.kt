@@ -1,6 +1,8 @@
 package com.herdal.deezerapp.di
 
+import com.herdal.deezerapp.data.repository.ArtistRepositoryImpl
 import com.herdal.deezerapp.data.repository.GenreRepositoryImpl
+import com.herdal.deezerapp.domain.repository.ArtistRepository
 import com.herdal.deezerapp.domain.repository.GenreRepository
 import dagger.Binds
 import dagger.Module
@@ -12,4 +14,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindGenreRepository(genreRepositoryImpl: GenreRepositoryImpl): GenreRepository
+
+    @Binds
+    abstract fun bindArtistRepository(artistRepositoryImpl: ArtistRepositoryImpl): ArtistRepository
 }
