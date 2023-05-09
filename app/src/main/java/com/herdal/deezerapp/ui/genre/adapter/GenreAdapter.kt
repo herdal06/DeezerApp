@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.herdal.deezerapp.databinding.ItemGenreBinding
 import com.herdal.deezerapp.domain.uimodel.Genre
 
-class GenreAdapter : RecyclerView.Adapter<GenreViewHolder>() {
+class GenreAdapter(
+    private val genreClickListener: GenreClickListener
+) : RecyclerView.Adapter<GenreViewHolder>() {
 
     private val diffUtil = object : DiffUtil.ItemCallback<Genre>() {
         override fun areItemsTheSame(
@@ -28,19 +30,19 @@ class GenreAdapter : RecyclerView.Adapter<GenreViewHolder>() {
 
     private val diffList = AsyncListDiffer(this, diffUtil)
 
-    var categories: List<Genre>
+    var genres: List<Genre>
         get() = diffList.currentList
         set(value) = diffList.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val binding = ItemGenreBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return GenreViewHolder(binding)
+        return GenreViewHolder(binding, genreClickListener)
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        holder.bind(categories[position])
+        holder.bind(genres[position])
     }
 
-    override fun getItemCount() = categories.size
+    override fun getItemCount() = genres.size
 }
