@@ -17,8 +17,8 @@ class AlbumDetailViewModel @Inject constructor(
     private val getTracksByAlbumUseCase: GetTracksByAlbumUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(AldumDetailUiState())
-    val uiState: StateFlow<AldumDetailUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(AlbumDetailUiState())
+    val uiState: StateFlow<AlbumDetailUiState> = _uiState.asStateFlow()
 
     fun onEvent(event: AlbumDetailUiEvent) {
         when (event) {
