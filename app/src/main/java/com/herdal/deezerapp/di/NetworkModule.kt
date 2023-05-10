@@ -4,6 +4,7 @@ import androidx.viewbinding.BuildConfig
 import com.herdal.deezerapp.data.remote.service.AlbumService
 import com.herdal.deezerapp.data.remote.service.ArtistService
 import com.herdal.deezerapp.data.remote.service.GenreService
+import com.herdal.deezerapp.data.remote.service.TrackService
 import com.herdal.deezerapp.utils.constants.NetworkConstants
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -82,4 +83,9 @@ object NetworkModule {
     @Singleton
     fun provideAlbumService(retrofit: Retrofit): AlbumService =
         retrofit.create(AlbumService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTrackService(retrofit: Retrofit): TrackService =
+        retrofit.create(TrackService::class.java)
 }
