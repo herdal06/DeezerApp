@@ -7,10 +7,15 @@ import com.herdal.deezerapp.utils.extensions.executeWithAction
 
 class AlbumViewHolder(
     private val binding: ItemAlbumBinding,
+    private val albumClickListener: AlbumClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(album: Album) = binding.apply {
         binding.executeWithAction {
             this.album = album
+        }
+
+        root.setOnClickListener {
+            albumClickListener.onAlbumClick(album.id)
         }
     }
 }

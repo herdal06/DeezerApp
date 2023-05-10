@@ -33,5 +33,17 @@
         <argument
             android:name="artistId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_artistDetailFragment_to_albumDetailFragment"
+            app:destination="@id/albumDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="com.herdal.deezerapp.ui.album_detail.AlbumDetailFragment"
+        android:label="fragment_album_detail"
+        tools:layout="@layout/fragment_album_detail" >
+        <argument
+            android:name="albumId"
+            app:argType="integer" />
     </fragment>
 </navigation>
