@@ -5,6 +5,8 @@ import com.herdal.deezerapp.domain.mapper.TrackDtoMapper
 import com.herdal.deezerapp.domain.mapper.TrackEntityMapper
 import com.herdal.deezerapp.domain.repository.TrackRepository
 import com.herdal.deezerapp.domain.uimodel.Track
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TrackRepositoryImpl @Inject constructor(
@@ -28,5 +30,11 @@ class TrackRepositoryImpl @Inject constructor(
 
     override suspend fun isTrackFavorite(id: Int): Boolean {
         return local.isTrackFavorite(id = id)
+    }
+
+    override fun getAllFavoriteTracks(): Flow<List<Track>> {
+        return local.getAll().map { entities ->
+            trackEntityMapper.toDomainList(entities)
+        }
     }
 }

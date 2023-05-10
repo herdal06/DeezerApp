@@ -24,4 +24,7 @@ class TrackEntityMapper : EntityMapper<TrackEntity, Track> {
             preview = domain.preview,
             isFavorite = domain.isFavorite
         )
+
+    fun toDomainList(entities: List<TrackEntity>): List<Track> =
+        entities.map { toDomain(it) }
 }
