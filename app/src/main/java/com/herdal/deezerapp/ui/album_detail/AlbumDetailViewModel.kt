@@ -3,6 +3,8 @@ package com.herdal.deezerapp.ui.album_detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.herdal.deezerapp.core.Response
+import com.herdal.deezerapp.domain.uimodel.Track
+import com.herdal.deezerapp.domain.usecase.AddOrRemoveTrackFromFavoriteUseCase
 import com.herdal.deezerapp.domain.usecase.GetTracksByAlbumUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AlbumDetailViewModel @Inject constructor(
-    private val getTracksByAlbumUseCase: GetTracksByAlbumUseCase
+    private val getTracksByAlbumUseCase: GetTracksByAlbumUseCase,
+    private val addOrRemoveTrackFromFavoriteUseCase: AddOrRemoveTrackFromFavoriteUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AlbumDetailUiState())
@@ -23,6 +26,7 @@ class AlbumDetailViewModel @Inject constructor(
     fun onEvent(event: AlbumDetailUiEvent) {
         when (event) {
             is AlbumDetailUiEvent.GetTracksByAlbum -> getTracksByAlbum(event.albumId)
+            is AlbumDetailUiEvent.FavoriteIconClicked -> favoriteIconClicked(event.track)
         }
     }
 
@@ -34,5 +38,9 @@ class AlbumDetailViewModel @Inject constructor(
                 is Response.Success -> _uiState.update { it.copy(tracks = response.data) }
             }
         }
+    }
+
+    private fun favoriteIconClicked(track: Track) = viewModelScope.launch {
+        addOrRemoveTrackFromFavoriteUseCase.execute(track)
     }
 }

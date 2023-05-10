@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.herdal.deezerapp.databinding.FragmentAlbumDetailBinding
+import com.herdal.deezerapp.domain.uimodel.Track
 import com.herdal.deezerapp.ui.album_detail.adapter.TrackAdapter
+import com.herdal.deezerapp.ui.album_detail.adapter.TrackClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,8 +52,17 @@ class AlbumDetailFragment : Fragment() {
     }
 
     private fun initRecyclerViewAdapters() {
-        trackAdapter = TrackAdapter()
+        trackAdapter = TrackAdapter(object : TrackClickListener {
+            override fun onFavoriteTrackClick(track: Track) {
+                onFavoriteIconClicked(track)
+            }
+        })
+
         setupRecyclerViews()
+    }
+
+    private fun onFavoriteIconClicked(track: Track) {
+        viewModel.onEvent(AlbumDetailUiEvent.FavoriteIconClicked(track))
     }
 
     private fun setupRecyclerViews() = with(binding) {
