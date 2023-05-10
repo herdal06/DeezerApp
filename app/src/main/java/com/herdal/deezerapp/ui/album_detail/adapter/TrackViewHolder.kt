@@ -7,10 +7,14 @@ import com.herdal.deezerapp.utils.extensions.executeWithAction
 
 class TrackViewHolder(
     private val binding: ItemTrackBinding,
+    private val trackClickListener: TrackClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(track: Track) = binding.apply {
         binding.executeWithAction {
             this.track = track
+        }
+        ivFavorite.setOnClickListener {
+            trackClickListener.onFavoriteTrackClick(track)
         }
     }
 }

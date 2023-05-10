@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.herdal.deezerapp.databinding.ItemTrackBinding
 import com.herdal.deezerapp.domain.uimodel.Track
 
-class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>() {
+class TrackAdapter(
+    private val trackClickListener: TrackClickListener
+) : RecyclerView.Adapter<TrackViewHolder>() {
 
     private val diffUtil = object : DiffUtil.ItemCallback<Track>() {
         override fun areItemsTheSame(
@@ -35,7 +37,7 @@ class TrackAdapter : RecyclerView.Adapter<TrackViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val binding = ItemTrackBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return TrackViewHolder(binding)
+        return TrackViewHolder(binding, trackClickListener)
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {

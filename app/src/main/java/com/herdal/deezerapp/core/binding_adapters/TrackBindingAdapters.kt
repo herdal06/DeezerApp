@@ -3,6 +3,7 @@ package com.herdal.deezerapp.core.binding_adapters
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.herdal.deezerapp.R
 
 @BindingAdapter("app:loadTrackImage")
 fun loadTrackImage(view: ImageView, imageUrl: String?) {
@@ -12,4 +13,9 @@ fun loadTrackImage(view: ImageView, imageUrl: String?) {
             .centerCrop()
             .into(view)
     }
+}
+
+@BindingAdapter("isFavorite")
+fun ImageView.setFavoriteIcon(isFavorite: Boolean) {
+    setImageResource(if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border)
 }
