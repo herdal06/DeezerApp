@@ -41,14 +41,16 @@ class AlbumDetailViewModel @Inject constructor(
     }
 
     private fun favoriteIconClicked(track: Track) = viewModelScope.launch {
-        val newTrack = track.copy(isFavorite = !track.isFavorite!!)
+        val newTrack = track.copy(isFavorite = !track.isFavorite)
         addOrRemoveTrackFromFavoriteUseCase.execute(newTrack)
-        _uiState.value = _uiState.value.copy(tracks = _uiState.value.tracks?.map {
+        val updatedTrackList = _uiState.value.tracks?.map {
             if (it.id == track.id) {
                 newTrack
             } else {
                 it
             }
-        })
+        }
+        _uiState.value = _uiState.value.copy(tracks = updatedTrackList)
     }
+
 }

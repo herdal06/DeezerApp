@@ -17,5 +17,5 @@ data class TrackEntity(
     @ColumnInfo(name = "preview")
     val preview: String? = null,
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean? = false
+    val isFavorite: Boolean = false
 )
