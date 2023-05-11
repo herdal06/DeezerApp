@@ -8,6 +8,7 @@
         <variable
             name="track"
             type="com.herdal.deezerapp.domain.uimodel.Track" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -50,7 +51,7 @@
                 app:layout_constraintStart_toEndOf="@+id/ivTrack"
                 app:layout_constraintTop_toBottomOf="@+id/tvTrackTitle" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/ivFavorite"
                 isFavorite="@{track.isFavorite}"
                 android:layout_width="48dp"

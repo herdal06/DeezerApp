@@ -16,6 +16,12 @@ fun loadTrackImage(view: ImageView, imageUrl: String?) {
 }
 
 @BindingAdapter("isFavorite")
-fun ImageView.setFavoriteIcon(isFavorite: Boolean) {
+fun ImageView.isFavorite(isFavorite: Boolean) {
     setImageResource(if (isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border)
+
+    setOnClickListener {
+        val newImageResource =
+            if (isFavorite) R.drawable.ic_favorite_border else R.drawable.ic_favorite
+        setImageResource(newImageResource)
+    }
 }
