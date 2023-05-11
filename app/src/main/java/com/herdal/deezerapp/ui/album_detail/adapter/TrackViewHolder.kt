@@ -16,5 +16,9 @@ class TrackViewHolder(
         ivFavorite.setOnClickListener {
             trackClickListener.onFavoriteTrackClick(track)
         }
+
+        root.setOnClickListener {
+            trackClickListener.onTrackClick(track.preview)
+        }
     }
 }

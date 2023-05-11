@@ -4,4 +4,5 @@ import com.herdal.deezerapp.domain.uimodel.Track
 
 interface TrackClickListener {
     fun onFavoriteTrackClick(track: Track)
+    fun onTrackClick(preview: String?)
 }
