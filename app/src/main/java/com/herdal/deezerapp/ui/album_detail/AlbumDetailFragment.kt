@@ -2,6 +2,7 @@ package com.herdal.deezerapp.ui.album_detail
 
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +62,7 @@ class AlbumDetailFragment : Fragment() {
         trackAdapter = TrackAdapter(object : TrackClickListener {
             override fun onFavoriteTrackClick(track: Track) {
                 onFavoriteIconClicked(track)
+                Log.d("AlbumDetailFragment","${track.isFavorite}")
             }
 
             override fun onTrackClick(preview: String?) {
