@@ -1,5 +1,6 @@
 package com.herdal.deezerapp.ui.album_detail
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,8 @@ class AlbumDetailFragment : Fragment() {
     private fun getAlbumIdByArgs() = navigationArgs.albumId
 
     private lateinit var trackAdapter: TrackAdapter
+
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,9 +59,42 @@ class AlbumDetailFragment : Fragment() {
             override fun onFavoriteTrackClick(track: Track) {
                 onFavoriteIconClicked(track)
             }
-        })
 
+            override fun onTrackClick(preview: String?) {
+                playTrackPreview(preview)
+            }
+        })
         setupRecyclerViews()
+    }
+
+    private fun playTrackPreview(preview: String?) {
+        mediaPlayer?.apply {
+            try {
+                if (isPlaying) {
+                    stop()
+                }
+                reset()
+                setDataSource(preview)
+                prepareAsync()
+                setOnPreparedListener {
+                    start()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } ?: run {
+            mediaPlayer = MediaPlayer().apply {
+                try {
+                    setDataSource(preview)
+                    prepareAsync()
+                    setOnPreparedListener {
+                        start()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
     private fun onFavoriteIconClicked(track: Track) {
@@ -72,5 +108,11 @@ class AlbumDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        mediaPlayer?.apply {
+            reset()
+            stop()
+            release()
+        }
+        mediaPlayer = null
     }
 }

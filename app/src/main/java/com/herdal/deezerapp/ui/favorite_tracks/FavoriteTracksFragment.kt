@@ -1,5 +1,6 @@
 package com.herdal.deezerapp.ui.favorite_tracks
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,8 @@ class FavoriteTracksFragment : Fragment() {
     private val viewModel: FavoriteTracksViewModel by viewModels()
 
     private lateinit var favoriteTracksAdapter: TrackAdapter
+
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,12 +56,36 @@ class FavoriteTracksFragment : Fragment() {
             override fun onFavoriteTrackClick(track: Track) {
                 onFavoriteIconClicked(track)
             }
+
+            override fun onTrackClick(preview: String?) {
+                playTrackPreview(preview)
+            }
         })
         setupRecyclerViews()
     }
 
     private fun setupRecyclerViews() = with(binding) {
         rvFavTracks.adapter = favoriteTracksAdapter
+    }
+
+    private var isPlaying: Boolean = false
+
+    private fun setPlaying(isPlaying: Boolean) {
+        this.isPlaying = isPlaying
+    }
+
+    private fun playTrackPreview(preview: String?) {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer().apply {
+            setDataSource(preview)
+            prepare()
+            start()
+            setOnCompletionListener {
+                setPlaying(false)
+            }
+        }
+        setPlaying(true)
     }
 
     private fun onFavoriteIconClicked(track: Track) {
@@ -68,5 +95,11 @@ class FavoriteTracksFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        mediaPlayer?.apply {
+            reset()
+            stop()
+            release()
+        }
+        mediaPlayer = null
     }
 }
