@@ -9,6 +9,6 @@ data class GenreDto(
     val id: Int? = null,
     @Json(name = "name")
     val name: String? = null,
-    @Json(name = "picture_medium")
+    @Json(name = "picture_xl")
     val picture: String? = null,
 )

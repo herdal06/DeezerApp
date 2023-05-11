@@ -9,6 +9,6 @@ data class ArtistDto(
     val id: Int? = null,
     @Json(name = "name")
     val name: String? = null,
-    @Json(name = "picture")
+    @Json(name = "picture_xl")
     val picture: String? = null,
 )

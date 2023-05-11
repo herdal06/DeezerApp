@@ -36,6 +36,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:text="@{track.title}"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/ivTrack"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -24,8 +24,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivArtist"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="175dp"
+                android:layout_height="175dp"
                 android:downloadImage="@{artist.picture}"
                 android:scaleType="fitXY"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -37,7 +37,7 @@
                 android:gravity="center"
                 android:padding="6dp"
                 android:text="@{artist.name}"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
