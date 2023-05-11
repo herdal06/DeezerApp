@@ -15,7 +15,7 @@ class GenreViewHolder(
         }
 
         root.setOnClickListener {
-            genre.id?.let { genreClickListener.onGenreClick(it) }
+            genre.id?.let { genreClickListener.onGenreClick(genre) }
         }
     }
 }

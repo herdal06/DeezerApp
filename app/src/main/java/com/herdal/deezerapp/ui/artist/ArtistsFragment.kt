@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,8 @@ class ArtistsFragment : Fragment() {
 
     private val navigationArgs: ArtistsFragmentArgs by navArgs()
 
-    private fun getGenreIdByArgs() = navigationArgs.genreId
+    private fun getGenreIdByArgs() = navigationArgs.genre.id
+    private fun getGenreNameByArgs() = navigationArgs.genre.name
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +41,8 @@ class ArtistsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewAdapters()
-        collectArtists(getGenreIdByArgs())
+        getGenreIdByArgs()?.let { collectArtists(it) }
+        setupActionBarTitle(getGenreNameByArgs())
     }
 
     private fun collectArtists(genreId: Int) {
@@ -67,6 +70,10 @@ class ArtistsFragment : Fragment() {
 
     private fun setupRecyclerViews() = with(binding) {
         rvArtists.adapter = artistAdapter
+    }
+
+    private fun setupActionBarTitle(title: String?) {
+        (activity as AppCompatActivity).supportActionBar?.title = title
     }
 
     override fun onDestroyView() {

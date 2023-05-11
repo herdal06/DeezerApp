@@ -15,7 +15,7 @@ class AlbumViewHolder(
         }
 
         root.setOnClickListener {
-            albumClickListener.onAlbumClick(album.id)
+            albumClickListener.onAlbumClick(album)
         }
     }
 }

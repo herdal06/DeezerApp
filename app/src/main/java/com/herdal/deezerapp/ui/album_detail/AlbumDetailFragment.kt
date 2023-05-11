@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -24,7 +25,8 @@ class AlbumDetailFragment : Fragment() {
 
     private val navigationArgs: AlbumDetailFragmentArgs by navArgs()
 
-    private fun getAlbumIdByArgs() = navigationArgs.albumId
+    private fun getAlbumIdByArgs() = navigationArgs.album.id
+    private fun getAlbumTitleByArgs() = navigationArgs.album.title
 
     private lateinit var trackAdapter: TrackAdapter
 
@@ -43,6 +45,7 @@ class AlbumDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewAdapters()
         collectTracks(getAlbumIdByArgs())
+        setupActionBarTitle(getAlbumTitleByArgs())
     }
 
     private fun collectTracks(albumId: Int) {
@@ -103,6 +106,10 @@ class AlbumDetailFragment : Fragment() {
 
     private fun setupRecyclerViews() = with(binding) {
         rvTracks.adapter = trackAdapter
+    }
+
+    private fun setupActionBarTitle(title: String?) {
+        (activity as AppCompatActivity).supportActionBar?.title = title
     }
 
     override fun onDestroyView() {

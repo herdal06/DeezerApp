@@ -8,7 +8,7 @@
         android:id="@+id/genresFragment"
         android:name="com.herdal.deezerapp.ui.genre.GenresFragment"
         android:label="Genres"
-        tools:layout="@layout/fragment_genres" >
+        tools:layout="@layout/fragment_genres">
         <action
             android:id="@+id/action_genresFragment_to_artistsFragment"
             app:destination="@id/artistsFragment" />
@@ -16,11 +16,10 @@
     <fragment
         android:id="@+id/artistsFragment"
         android:name="com.herdal.deezerapp.ui.artist.ArtistsFragment"
-        android:label="Artists"
-        tools:layout="@layout/fragment_artists" >
+        tools:layout="@layout/fragment_artists">
         <argument
-            android:name="genreId"
-            app:argType="integer" />
+            android:name="genre"
+            app:argType="com.herdal.deezerapp.domain.uimodel.Genre" />
         <action
             android:id="@+id/action_artistsFragment_to_artistDetailFragment"
             app:destination="@id/artistDetailFragment" />
@@ -28,8 +27,7 @@
     <fragment
         android:id="@+id/artistDetailFragment"
         android:name="com.herdal.deezerapp.ui.artist_detail.ArtistDetailFragment"
-        android:label="Artist Details"
-        tools:layout="@layout/fragment_artist_detail" >
+        tools:layout="@layout/fragment_artist_detail">
         <argument
             android:name="artistId"
             app:argType="integer" />
@@ -40,11 +38,10 @@
     <fragment
         android:id="@+id/albumDetailFragment"
         android:name="com.herdal.deezerapp.ui.album_detail.AlbumDetailFragment"
-        android:label="Album Details"
-        tools:layout="@layout/fragment_album_detail" >
+        tools:layout="@layout/fragment_album_detail">
         <argument
-            android:name="albumId"
-            app:argType="integer" />
+            android:name="album"
+            app:argType="com.herdal.deezerapp.domain.uimodel.Album" />
     </fragment>
     <fragment
         android:id="@+id/favoriteTracksFragment"

@@ -1,13 +1,14 @@
 package com.herdal.deezerapp.ui.genre
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.herdal.deezerapp.databinding.FragmentGenresBinding
+import com.herdal.deezerapp.domain.uimodel.Genre
 import com.herdal.deezerapp.ui.genre.adapter.GenreAdapter
 import com.herdal.deezerapp.ui.genre.adapter.GenreClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
@@ -48,15 +49,15 @@ class GenresFragment : Fragment() {
 
     private fun initRecyclerViewAdapters() {
         genreAdapter = GenreAdapter(object : GenreClickListener {
-            override fun onGenreClick(id: Int) {
-                navigateToArtistList(id)
+            override fun onGenreClick(genre: Genre) {
+                navigateToArtistList(genre)
             }
         })
         setupRecyclerViews()
     }
 
-    private fun navigateToArtistList(id: Int) {
-        val action = GenresFragmentDirections.actionGenresFragmentToArtistsFragment(id)
+    private fun navigateToArtistList(genre: Genre) {
+        val action = GenresFragmentDirections.actionGenresFragmentToArtistsFragment(genre)
         findNavController().navigate(action)
     }
 
