@@ -27,7 +27,7 @@ class TrackLocalDataSource @Inject constructor(
             trackDao.delete(track)
         }
 
-    override suspend fun isTrackFavorite(id: Int): Boolean =
+    override suspend fun isTrackFavorite(id: Long): Boolean =
         withContext(ioDispatcher) {
             trackDao.isTrackFavorite(id) != null
         }

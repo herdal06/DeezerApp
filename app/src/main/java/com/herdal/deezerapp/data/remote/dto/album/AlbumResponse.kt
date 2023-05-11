@@ -7,8 +7,4 @@ import com.squareup.moshi.JsonClass
 data class AlbumResponse(
     @Json(name = "data")
     val albums: List<AlbumDto>,
-    @Json(name = "next")
-    val next: String,
-    @Json(name = "total")
-    val total: Int
 )

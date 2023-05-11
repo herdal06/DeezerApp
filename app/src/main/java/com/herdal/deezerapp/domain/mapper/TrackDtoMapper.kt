@@ -3,6 +3,7 @@ package com.herdal.deezerapp.domain.mapper
 import com.herdal.deezerapp.core.mapper.DtoMapper
 import com.herdal.deezerapp.data.remote.dto.track.TrackDto
 import com.herdal.deezerapp.domain.uimodel.Track
+import com.herdal.deezerapp.utils.extensions.toSeconds
 import com.herdal.deezerapp.utils.extensions.toTimeString
 
 class TrackDtoMapper : DtoMapper<TrackDto, Track> {
@@ -19,7 +20,7 @@ class TrackDtoMapper : DtoMapper<TrackDto, Track> {
         TrackDto(
             id = domain.id,
             title = domain.title,
-            duration = domain.duration?.toInt(),
+            duration = domain.duration?.toSeconds(),
             image = domain.image,
             preview = domain.preview
         )

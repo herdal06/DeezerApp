@@ -28,7 +28,7 @@ class TrackRepositoryImpl @Inject constructor(
         return local.deleteFromFavorite(trackEntityMapper.fromDomain(track))
     }
 
-    override suspend fun isTrackFavorite(id: Int): Boolean {
+    override suspend fun isTrackFavorite(id: Long): Boolean {
         return local.isTrackFavorite(id = id)
     }
 

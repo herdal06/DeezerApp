@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class TrackDto(
     @Json(name = "id")
-    val id: Int? = null,
+    val id: Long? = null,
     @Json(name = "title")
     val title: String? = null,
     @Json(name = "duration")

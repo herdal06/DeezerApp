@@ -17,5 +17,5 @@ interface TrackDao {
     suspend fun delete(track: TrackEntity)
 
     @Query("SELECT * FROM tracks WHERE id=:id")
-    suspend fun isTrackFavorite(id: Int): TrackEntity?
+    suspend fun isTrackFavorite(id: Long): TrackEntity?
 }

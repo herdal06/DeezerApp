@@ -13,6 +13,6 @@ interface TrackDataSource {
         fun getAll(): Flow<List<TrackEntity>>
         suspend fun addToFavorite(track: TrackEntity)
         suspend fun deleteFromFavorite(track: TrackEntity)
-        suspend fun isTrackFavorite(id: Int): Boolean
+        suspend fun isTrackFavorite(id: Long): Boolean
     }
 }
