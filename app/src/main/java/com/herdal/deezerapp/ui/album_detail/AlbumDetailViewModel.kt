@@ -29,6 +29,7 @@ class AlbumDetailViewModel @Inject constructor(
         _uiState.value.tracks?.forEach { track ->
             track.isFavorite = trackRepository.isTrackFavorite(track.id ?: -1)
         }
+        _uiState.value = _uiState.value.copy(tracks = _uiState.value.tracks)
     }
 
     init {
@@ -49,11 +50,13 @@ class AlbumDetailViewModel @Inject constructor(
             when (response) {
                 is Response.Error -> _uiState.update { it.copy(error = response.message) }
                 is Response.Loading -> _uiState.update { it.copy(loading = true) }
-                is Response.Success -> _uiState.update { it.copy(tracks = response.data) }
+                is Response.Success -> {
+                    _uiState.update { it.copy(tracks = response.data) }
+                    updateTrackFavoriteStatus() // update favorite status for new tracks
+                }
             }
         }
     }
-
     private fun favoriteIconClicked(track: Track) = viewModelScope.launch {
         val newTrack = track.copy(isFavorite = !track.isFavorite)
         addOrRemoveTrackFromFavoriteUseCase.execute(newTrack)
@@ -67,5 +70,7 @@ class AlbumDetailViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(tracks = updatedTrackList)
         // update cached tracks in database
         trackRepository.updateTrack(newTrack)
+        // update isFavorite status for all tracks
+        updateTrackFavoriteStatus()
     }
 }
