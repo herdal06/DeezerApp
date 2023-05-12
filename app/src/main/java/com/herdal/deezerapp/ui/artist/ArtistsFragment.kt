@@ -13,6 +13,8 @@ import com.herdal.deezerapp.databinding.FragmentArtistsBinding
 import com.herdal.deezerapp.ui.artist.adapter.ArtistAdapter
 import com.herdal.deezerapp.ui.artist.adapter.ArtistClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
+import com.herdal.deezerapp.utils.extensions.hide
+import com.herdal.deezerapp.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,11 +47,32 @@ class ArtistsFragment : Fragment() {
         setupActionBarTitle(getGenreNameByArgs())
     }
 
-    private fun collectArtists(genreId: Int) {
+    private fun collectArtists(genreId: Int) = with(binding) {
         viewModel.onEvent(ArtistsUiEvent.GetArtistsByGenre(genreId))
         collectLatestLifecycleFlow(viewModel.uiState) { state ->
             state.artists?.let { artists ->
+                pbArtists.hide()
+                tvArtistError.hide()
                 artistAdapter.artists = artists
+                rvArtists.show()
+            }
+            if (state.loading && state.artists.isNullOrEmpty()) {
+                pbArtists.show()
+                tvArtistError.hide()
+                rvArtists.hide()
+            } else {
+                pbArtists.hide()
+                state.error?.let {
+                    tvArtistError.text = it
+                    tvArtistError.show()
+                } ?: run {
+                    tvArtistError.hide()
+                }
+                if (state.artists.isNullOrEmpty()) {
+                    rvArtists.hide()
+                } else {
+                    rvArtists.show()
+                }
             }
         }
     }

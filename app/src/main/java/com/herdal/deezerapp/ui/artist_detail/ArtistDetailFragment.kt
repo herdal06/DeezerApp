@@ -15,6 +15,8 @@ import com.herdal.deezerapp.domain.uimodel.Artist
 import com.herdal.deezerapp.ui.artist_detail.adapter.AlbumAdapter
 import com.herdal.deezerapp.ui.artist_detail.adapter.AlbumClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
+import com.herdal.deezerapp.utils.extensions.hide
+import com.herdal.deezerapp.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,11 +48,25 @@ class ArtistDetailFragment : Fragment() {
         collectArtistAlbums(getArtistIdByArgs())
     }
 
-    private fun collectArtistDetail(artistId: Int) {
+    private fun collectArtistDetail(artistId: Int) = with(binding) {
         viewModel.onEvent(ArtistDetailUiEvent.GetArtistById(artistId))
         collectLatestLifecycleFlow(viewModel.uiState) { state ->
             state.artist?.let { artist ->
                 setupUI(artist)
+            }
+            if (state.loading && state.artist == null) {
+                pbArtistDetail.show()
+                tvErrorArtistDetail.hide()
+                rvAlbums.hide()
+            } else {
+                pbArtistDetail.hide()
+                if (state.error != null) {
+                    tvErrorArtistDetail.show()
+                    rvAlbums.hide()
+                } else {
+                    tvErrorArtistDetail.hide()
+                    rvAlbums.show()
+                }
             }
         }
     }

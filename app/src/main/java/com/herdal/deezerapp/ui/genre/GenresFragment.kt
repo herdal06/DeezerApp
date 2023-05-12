@@ -12,6 +12,8 @@ import com.herdal.deezerapp.domain.uimodel.Genre
 import com.herdal.deezerapp.ui.genre.adapter.GenreAdapter
 import com.herdal.deezerapp.ui.genre.adapter.GenreClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
+import com.herdal.deezerapp.utils.extensions.hide
+import com.herdal.deezerapp.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,14 +37,35 @@ class GenresFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewAdapters()
-        collectCategories()
+        collectGenres()
     }
 
-    private fun collectCategories() {
+    private fun collectGenres() = with(binding) {
         viewModel.onEvent(GenresUiEvent.GetGenres)
         collectLatestLifecycleFlow(viewModel.uiState) { state ->
             state.genres?.let { categories ->
+                pbGenres.hide()
+                tvError.hide()
                 genreAdapter.genres = categories
+                rvGenres.show()
+            }
+            if (state.loading && state.genres.isNullOrEmpty()) {
+                pbGenres.show()
+                tvError.hide()
+                rvGenres.hide()
+            } else {
+                pbGenres.hide()
+                state.error?.let {
+                    tvError.text = it
+                    tvError.show()
+                } ?: run {
+                    tvError.hide()
+                }
+                if (state.genres.isNullOrEmpty()) {
+                    rvGenres.hide()
+                } else {
+                    rvGenres.show()
+                }
             }
         }
     }
@@ -62,7 +85,7 @@ class GenresFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() = with(binding) {
-        rvCategories.adapter = genreAdapter
+        rvGenres.adapter = genreAdapter
     }
 
     override fun onDestroyView() {

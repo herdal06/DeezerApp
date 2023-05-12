@@ -37,4 +37,8 @@ class TrackRepositoryImpl @Inject constructor(
             trackEntityMapper.toDomainList(entities)
         }
     }
+
+    override suspend fun updateTrack(track: Track) {
+        local.update(trackEntityMapper.fromDomain(track))
+    }
 }

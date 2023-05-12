@@ -18,4 +18,7 @@ interface TrackDao {
 
     @Query("SELECT * FROM tracks WHERE id=:id")
     suspend fun isTrackFavorite(id: Long): TrackEntity?
+
+    @Update
+    suspend fun update(track: TrackEntity?)
 }

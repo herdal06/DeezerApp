@@ -3,6 +3,7 @@ package com.herdal.deezerapp.ui.album_detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.herdal.deezerapp.core.Response
+import com.herdal.deezerapp.domain.repository.TrackRepository
 import com.herdal.deezerapp.domain.uimodel.Track
 import com.herdal.deezerapp.domain.usecase.AddOrRemoveTrackFromFavoriteUseCase
 import com.herdal.deezerapp.domain.usecase.GetTracksByAlbumUseCase
@@ -17,11 +18,24 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumDetailViewModel @Inject constructor(
     private val getTracksByAlbumUseCase: GetTracksByAlbumUseCase,
-    private val addOrRemoveTrackFromFavoriteUseCase: AddOrRemoveTrackFromFavoriteUseCase
+    private val addOrRemoveTrackFromFavoriteUseCase: AddOrRemoveTrackFromFavoriteUseCase,
+    private val trackRepository: TrackRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AlbumDetailUiState())
     val uiState: StateFlow<AlbumDetailUiState> = _uiState.asStateFlow()
+
+    private suspend fun updateTrackFavoriteStatus() {
+        _uiState.value.tracks?.forEach { track ->
+            track.isFavorite = trackRepository.isTrackFavorite(track.id ?: -1)
+        }
+    }
+
+    init {
+        viewModelScope.launch {
+            updateTrackFavoriteStatus()
+        }
+    }
 
     fun onEvent(event: AlbumDetailUiEvent) {
         when (event) {
@@ -51,6 +65,7 @@ class AlbumDetailViewModel @Inject constructor(
             }
         }
         _uiState.value = _uiState.value.copy(tracks = updatedTrackList)
+        // update cached tracks in database
+        trackRepository.updateTrack(newTrack)
     }
-
 }

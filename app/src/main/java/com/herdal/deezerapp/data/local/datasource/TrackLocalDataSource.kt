@@ -31,4 +31,9 @@ class TrackLocalDataSource @Inject constructor(
         withContext(ioDispatcher) {
             trackDao.isTrackFavorite(id) != null
         }
+
+    override suspend fun update(track: TrackEntity?) =
+        withContext(ioDispatcher) {
+            trackDao.update(track)
+        }
 }

@@ -14,5 +14,6 @@ interface TrackDataSource {
         suspend fun addToFavorite(track: TrackEntity)
         suspend fun deleteFromFavorite(track: TrackEntity)
         suspend fun isTrackFavorite(id: Long): Boolean
+        suspend fun update(track: TrackEntity?)
     }
 }

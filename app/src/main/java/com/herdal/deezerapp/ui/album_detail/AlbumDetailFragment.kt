@@ -2,7 +2,6 @@ package com.herdal.deezerapp.ui.album_detail
 
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,8 @@ import com.herdal.deezerapp.domain.uimodel.Track
 import com.herdal.deezerapp.ui.album_detail.adapter.TrackAdapter
 import com.herdal.deezerapp.ui.album_detail.adapter.TrackClickListener
 import com.herdal.deezerapp.utils.extensions.collectLatestLifecycleFlow
+import com.herdal.deezerapp.utils.extensions.hide
+import com.herdal.deezerapp.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,11 +50,32 @@ class AlbumDetailFragment : Fragment() {
         setupActionBarTitle(getAlbumTitleByArgs())
     }
 
-    private fun collectTracks(albumId: Int) {
+    private fun collectTracks(albumId: Int) = with(binding) {
         viewModel.onEvent(AlbumDetailUiEvent.GetTracksByAlbum(albumId))
         collectLatestLifecycleFlow(viewModel.uiState) { state ->
             state.tracks?.let { tracks ->
+                pbTracks.hide()
+                tvTrackError.hide()
                 trackAdapter.tracks = tracks
+                rvTracks.show()
+            }
+            if (state.loading && state.tracks.isNullOrEmpty()) {
+                pbTracks.show()
+                tvTrackError.hide()
+                rvTracks.hide()
+            } else {
+                pbTracks.hide()
+                state.error?.let {
+                    tvTrackError.text = it
+                    tvTrackError.show()
+                } ?: run {
+                    tvTrackError.hide()
+                }
+                if (state.tracks.isNullOrEmpty()) {
+                    rvTracks.hide()
+                } else {
+                    rvTracks.show()
+                }
             }
         }
     }
@@ -62,7 +84,6 @@ class AlbumDetailFragment : Fragment() {
         trackAdapter = TrackAdapter(object : TrackClickListener {
             override fun onFavoriteTrackClick(track: Track) {
                 onFavoriteIconClicked(track)
-                Log.d("AlbumDetailFragment","${track.isFavorite}")
             }
 
             override fun onTrackClick(preview: String?) {

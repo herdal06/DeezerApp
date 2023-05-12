@@ -3,6 +3,7 @@ package com.herdal.deezerapp.ui.favorite_tracks
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.herdal.deezerapp.core.Response
+import com.herdal.deezerapp.domain.repository.TrackRepository
 import com.herdal.deezerapp.domain.uimodel.Track
 import com.herdal.deezerapp.domain.usecase.AddOrRemoveTrackFromFavoriteUseCase
 import com.herdal.deezerapp.domain.usecase.GetFavoriteTracksUseCase
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteTracksViewModel @Inject constructor(
     private val getFavoriteTracksUseCase: GetFavoriteTracksUseCase,
-    private val addOrRemoveTrackFromFavoriteUseCase: AddOrRemoveTrackFromFavoriteUseCase
+    private val addOrRemoveTrackFromFavoriteUseCase: AddOrRemoveTrackFromFavoriteUseCase,
+    private val trackRepository: TrackRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(FavoriteTracksUiState())
@@ -42,5 +44,8 @@ class FavoriteTracksViewModel @Inject constructor(
 
     private fun favoriteIconClicked(track: Track) = viewModelScope.launch {
         addOrRemoveTrackFromFavoriteUseCase.execute(track)
+
+        // update cached tracks in database
+        trackRepository.updateTrack(track)
     }
 }

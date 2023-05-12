@@ -7,7 +7,7 @@ import javax.inject.Inject
 class AddOrRemoveTrackFromFavoriteUseCase @Inject constructor(
     private val trackRepository: TrackRepository,
 ) {
-    suspend fun execute(track: Track) {
+    suspend fun execute(track: Track): Track {
         track.id?.let { id ->
             if (trackRepository.isTrackFavorite(id)) {
                 trackRepository.deleteTrackFromFavorite(track.copy(isFavorite = false))
@@ -15,5 +15,6 @@ class AddOrRemoveTrackFromFavoriteUseCase @Inject constructor(
                 trackRepository.addTrackToFavorite(track.copy(isFavorite = true))
             }
         }
+        return track.copy(isFavorite = !track.isFavorite)
     }
 }

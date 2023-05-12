@@ -6,5 +6,5 @@ data class Track(
     val duration: String? = null,
     val image: String? = null,
     val preview: String? = null,
-    val isFavorite: Boolean = false
+    var isFavorite: Boolean = false
 )
