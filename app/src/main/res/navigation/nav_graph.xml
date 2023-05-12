@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/genresFragment">
+    <fragment
+        android:id="@+id/genresFragment"
+        android:name="com.herdal.deezerapp.ui.genre.GenresFragment"
+        android:label="Genres"
+        tools:layout="@layout/fragment_genres">
+        <action
+            android:id="@+id/action_genresFragment_to_artistsFragment"
+            app:destination="@id/artistsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistsFragment"
+        android:name="com.herdal.deezerapp.ui.artist.ArtistsFragment"
+        tools:layout="@layout/fragment_artists">
+        <argument
+            android:name="genre"
+            app:argType="com.herdal.deezerapp.domain.uimodel.Genre" />
+        <action
+            android:id="@+id/action_artistsFragment_to_artistDetailFragment"
+            app:destination="@id/artistDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistDetailFragment"
+        android:name="com.herdal.deezerapp.ui.artist_detail.ArtistDetailFragment"
+        tools:layout="@layout/fragment_artist_detail">
+        <argument
+            android:name="artistId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_artistDetailFragment_to_albumDetailFragment"
+            app:destination="@id/albumDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/albumDetailFragment"
+        android:name="com.herdal.deezerapp.ui.album_detail.AlbumDetailFragment"
+        tools:layout="@layout/fragment_album_detail">
+        <argument
+            android:name="album"
+            app:argType="com.herdal.deezerapp.domain.uimodel.Album" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteTracksFragment"
+        android:name="com.herdal.deezerapp.ui.favorite_tracks.FavoriteTracksFragment"
+        android:label="Favorite Tracks"
+        tools:layout="@layout/fragment_favorite_tracks" />
+</navigation>
