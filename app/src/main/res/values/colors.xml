@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#FAFAFA</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_700">#D32F2F</color>
+    <color name="dark_gray">#424242</color>
+    <color name="text_color">#101010</color>
 </resources>
