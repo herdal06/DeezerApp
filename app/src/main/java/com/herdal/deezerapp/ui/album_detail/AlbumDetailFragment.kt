@@ -40,13 +40,13 @@ class AlbumDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAlbumDetailBinding.inflate(inflater, container, false)
+        collectTracks(getAlbumIdByArgs())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerViewAdapters()
-        collectTracks(getAlbumIdByArgs())
         setupActionBarTitle(getAlbumTitleByArgs())
     }
 
