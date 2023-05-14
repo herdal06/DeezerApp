@@ -1,4 +1,4 @@
-<h1 align="center">🎮 DeezerApp</h1>
+<h1 align="center">DeezerApp</h1>
 
  <p align="center">  
 <strong>This application was created as a case study for Appcent.
