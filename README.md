@@ -10,7 +10,8 @@ DeezerApp is an Android application designed to provide users with a platform to
 <br/>
 
 # App Video
-https://github.com/herdal06/DeezerApp/assets/81641123/2b863e15-c048-45f3-9f86-713bfadbca0e
+[![App](https://img.youtube.com/vi/zn1qSIs41Us/0.jpg)](https://www.youtube.com/watch?v=zn1qSIs41Us)
+
 
 ### App Screenshots
 
