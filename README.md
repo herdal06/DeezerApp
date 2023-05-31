@@ -1,9 +1,6 @@
 <h1 align="center">DeezerApp</h1>
 
- <p align="center">  
-<strong>This application was created as a case study for Appcent.
-  </strong>
-  </p>
+
 
 <p align="center">  
 DeezerApp is an Android application designed to provide users with a platform to browse, play, and add track to their favorites. The app offers a wide range of features including a variety of music genres, artist details, album details, and song preview playback.
